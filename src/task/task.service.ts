@@ -15,7 +15,7 @@ export class TaskService {
     return await this.taskRepository.save({
       // id generated automatically
       ...createTaskDto, // task text
-      completed: false, // default task state
+      isCompleted: false, // default task state
     });
   }
 
@@ -24,7 +24,6 @@ export class TaskService {
   }
 
   async findOne(id: number): Promise<Task> {
-    // return await this.taskRepository.findOne(id);
     return await this.taskRepository.findOneOrFail(id);
   }
 
@@ -35,8 +34,8 @@ export class TaskService {
   }
 
   async changeTaskStatus(id: number) {
-    const task = await this.taskRepository.findOne(id);
-    task.completed = !task.completed;
+    const task: Task = await this.taskRepository.findOne(id);
+    task.isCompleted = !task.isCompleted;
     return await this.taskRepository.save(task);
   }
 
